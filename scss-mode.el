@@ -66,8 +66,15 @@ HYPERLINK HIGHLIGHT)"
   :group 'scss)
 
 (defconst scss-font-lock-keywords
-  ;; Variables
-  '(("$[a-z_-][a-z-_0-9]*" . font-lock-constant-face)))
+  `(
+    ;; Booleans
+    (,(regexp-opt '("true" "false") 'words) . font-lock-constant-face)
+    ;; Builtin functions (stolen from
+    ;; https://github.com/Microsoft/vscode/blob/b1e8b37c0444a4127da9472c688e6d6c786ad6a3/extensions/scss/syntaxes/scss.json)
+    ;; css keywords are missing, but they should be added to css-mode
+    ("\\_<\\(headings\\|stylesheet-url\\|rgba?\\|hsla?\\|ie-hex-str\\|red\\|green\\|blue\\|alpha\\|opacity\\|hue\\|saturation\\|lightness\\|prefixed\\|prefix\\|-moz\\|-svg\\|-css2\\|-pie\\|-webkit\\|-ms\\|font-\\(?:files\\|url\\)\\|grid-image\\|image-\\(?:width\\|height\\|url\\|color\\)\\|sprites?\\|sprite-\\(?:map\\|map-name\\|file\\|url\\|position\\)\\|inline-\\(?:font-files\\|image\\)\\|opposite-position\\|grad-point\\|grad-end-position\\|color-stops\\|color-stops-in-percentages\\|grad-color-stops\\|\\(?:radial\\|linear\\)-\\(?:gradient\\|svg-gradient\\)\\|opacify\\|fade-?in\\|transparentize\\|fade-?out\\|lighten\\|darken\\|saturate\\|desaturate\\|grayscale\\|adjust-\\(?:hue\\|lightness\\|saturation\\|color\\)\\|scale-\\(?:lightness\\|saturation\\|color\\)\\|change-color\\|spin\\|complement\\|invert\\|mix\\|-compass-\\(?:list\\|space-list\\|slice\\|nth\\|list-size\\)\\|blank\\|compact\\|nth\\|first-value-of\\|join\\|length\\|append\\|nest\\|append-selector\\|headers\\|enumerate\\|range\\|percentage\\|unitless\\|unit\\|if\\|type-of\\|comparable\\|elements-of-type\\|quote\\|unquote\\|escape\\|e\\|sin\\|cos\\|tan\\|abs\\|round\\|ceil\\|floor\\|pi\\|translate\\(?:X\\|Y\\)\\)(" . (1 font-lock-builtin-face))
+    ;; Variables
+    ("$[a-z_-][a-z-_0-9]*" . font-lock-variable-name-face)))
 
 (defun scss-compile-maybe()
   "Runs `scss-compile' on if `scss-compile-at-save' is t"
